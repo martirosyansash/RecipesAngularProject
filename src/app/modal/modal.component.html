@@ -1,0 +1,15 @@
+<div 
+    class="container"
+    *ngIf ="isOpen">
+     <!-- *ngIf="isModalOpen$ | async"  -->
+    <div class="backdrop"></div>
+    <div class="alert-box">
+        <p>Error</p>
+        <div class="alert-box-actions">
+            <hr>
+            <button class="btn btn-primary">Ok</button>
+            <button class="btn btn-primary margi m1" (click)="onClose()">Close</button>
+        </div>
+    </div>
+</div>
+
