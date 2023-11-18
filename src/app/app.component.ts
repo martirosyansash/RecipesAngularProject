@@ -9,20 +9,28 @@ import { ModalService } from './modal/modal.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  
   title = 'BasicAngularProject';
+  /////////////////////////////////////////////////////////////////////////////////////////
+
   constructor(
     private authService: AuthService,
     private loggingService: LoggingService,
-    private modalService: ModalService){}
+    private modalService: ModalService
+  ) { }
+
+  /////////////////////////////////////////////////////////////////////////////////////////
 
   ngOnInit(): void {
     this.authService.autoLogin();
     this.loggingService.printLog('Hello from AppComponent from ngOnInit');
   }
   
+  /////////////////////////////////////////////////////////////////////////////////////////
+
   onOpenModal() {
     this.modalService.openModal();
   }
+  
+  /////////////////////////////////////////////////////////////////////////////////////////
   
 }

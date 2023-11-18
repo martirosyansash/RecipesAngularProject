@@ -4,7 +4,7 @@ import { AuthResponseData, AuthService } from './auth.service';
 import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs-compat/Subscription';
 import { Router } from '@angular/router';
-import { AlertComponent } from 'src/app/shared/alert/alert/alert.component';
+import { AlertComponent } from 'src/app/shared/alert/alert.component';
 import { PlaceholderDirective } from 'src/app/shared/placeholder/placeholder.directive';
 
 @Component({

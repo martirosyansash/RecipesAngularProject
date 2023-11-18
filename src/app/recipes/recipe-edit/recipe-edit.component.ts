@@ -2,8 +2,6 @@ import { Component , OnInit} from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import {ActivatedRoute, Params, Router} from "@angular/router"
 import { RecipeService } from '../recipe.service';
-import { Ingredient } from 'src/app/shared/ingredient.model';
-import { Recipe } from 'src/app/shared/recipe.model';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -15,9 +13,12 @@ export class RecipeEditComponent implements OnInit {
   editmode = false;
   recipeForm: FormGroup;
 
-  constructor(private route: ActivatedRoute,
-              private recipeService: RecipeService,
-              private router: Router){}
+  constructor(
+    private route: ActivatedRoute,
+    private recipeService: RecipeService,
+    private router: Router
+  ) { }
+
   /////////////////////////////////////////////////////////////////////
   ngOnInit(){
     this.route.params
@@ -29,8 +30,9 @@ export class RecipeEditComponent implements OnInit {
         }
       )
   }
-  /////////////////////////////////////////////////////////////////////
-  onSubmit(){
+  //////////////////////////////////////////////////////////////////////////////////
+
+  onSubmit() {
     // const newRecipe = new Recipe(
     //   this.recipeForm.value['name'],
     //   this.recipeForm.value['description'],
@@ -43,7 +45,8 @@ export class RecipeEditComponent implements OnInit {
       this.onCencel();
   }
 
-  ///////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////
+
   onAddIngredient(){
     (<FormArray>this.recipeForm.get('ingredients')).push(
       new FormGroup({
@@ -54,15 +57,21 @@ export class RecipeEditComponent implements OnInit {
       })
     )
   }
-  /////////////////////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////////////////////////////////////////
+
   onDeleteIngredient(index: number){
     (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
   }
-  /////////////////////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////////////////////////////////////////
+
   onCencel(){
-    this.router.navigate(['../'], {relativeTo: this.route})
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
-  /////////////////////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////////////////////////////////////////
+
   private initForm(){
     let recipeName = '';
     let recipeImagePath = '';
@@ -93,10 +102,11 @@ export class RecipeEditComponent implements OnInit {
     })
   }
 
-  //////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////
+
   get controls() { // a getter!
     return (<FormArray>this.recipeForm.get('ingredients')).controls;
   }
 
-  //////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////
 } 

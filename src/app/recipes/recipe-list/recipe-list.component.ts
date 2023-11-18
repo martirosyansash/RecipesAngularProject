@@ -12,12 +12,17 @@ import { Subscription } from 'rxjs/Subscription';
 export class RecipeListComponent implements OnInit, OnDestroy {
   recipes : Recipe[];
   subscription: Subscription;
+
   ////////////////////////////////////////////////////////////////////////
-  constructor(private recipeService: RecipeService,
-              private router: Router,
-              private route: ActivatedRoute ){}
+
+  constructor(
+    private recipeService: RecipeService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
     
   ////////////////////////////////////////////////////////////////////////
+
   ngOnInit(){
     this.recipes = this.recipeService.getRecipes();
     this.subscription = this.recipeService.recipesChanged.subscribe(
@@ -26,12 +31,18 @@ export class RecipeListComponent implements OnInit, OnDestroy {
       }
     )
   }
+
   ////////////////////////////////////////////////////////////////////////
+
   onNewRecipe(){
     this.router.navigate(["new"], {relativeTo: this.route})
   }
+
   ////////////////////////////////////////////////////////////////////////
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
+  ////////////////////////////////////////////////////////////////////////
 }

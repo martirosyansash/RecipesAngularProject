@@ -7,9 +7,16 @@ import { AuthService } from "../auth/auth.service";
 
 @Injectable({providedIn: 'root'})
 export class DataStorageService{
-    constructor(private http: HttpClient, 
-                private recipeService: RecipeService, 
-                private authService: AuthService){}
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    constructor(
+        private http: HttpClient, 
+        private recipeService: RecipeService, 
+        private authService: AuthService
+    ) { }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
 
     storeRecipes(){
         const recipes = this.recipeService.getRecipes();
@@ -19,6 +26,7 @@ export class DataStorageService{
         });
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////
     
     fetchRecipes(){
         return this.http.get<Recipe[]>("https://ng-course-recipe-book-e70db-default-rtdb.firebaseio.com/recipes.json").pipe( 
@@ -32,4 +40,6 @@ export class DataStorageService{
             this.recipeService.setRecipes(recipes);
         }));
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
 }
