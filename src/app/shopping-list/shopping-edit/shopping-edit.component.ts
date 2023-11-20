@@ -18,7 +18,6 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
   editMode = false;
   editedItemIndex: number;
   editItem: Ingredient;
-  @Output() onDeactivetedIngredientIndex = new EventEmitter<number>();
 
   /////////////////////////////////////////////////////////////////////////////////
 
@@ -52,7 +51,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
     }else{
       this.slService.addIngredient(newIngredient);
     }
-    this.onDeactivetedIngredientIndex.emit(-1);
+    this.slService.onDeactivetedIngredientIndex.emit(-1);
     this.editMode = false;
     form.reset();
   }
@@ -69,6 +68,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
   onClear(){
     this.editMode = false;
     this.slForm.reset();
+    this.slService.onDeactivetedIngredientIndex.emit(-1);
   }
 
   /////////////////////////////////////////////////////////////////////////////////

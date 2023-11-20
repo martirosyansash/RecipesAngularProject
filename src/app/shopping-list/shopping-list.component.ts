@@ -31,7 +31,13 @@ export class ShoppingListComponent implements OnInit, OnDestroy{
       (ingredients: Ingredient[])=>{
         this.ingredients = ingredients;
     })
-      this.loggingService.printLog('Hello from ShoppingComponent from ngOninit');
+    this.loggingService.printLog('Hello from ShoppingComponent from ngOninit');
+    
+    this.slService.onDeactivetedIngredientIndex.subscribe(
+      (index: number) => { 
+        this.activeIngredientIndex = index;
+      }
+    )
   }
 
   /////////////////////////////////////////////////////////////////////////////////////
