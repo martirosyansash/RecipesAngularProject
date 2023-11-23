@@ -20,8 +20,11 @@ export interface AuthResponseData{
 export class AuthService{
     user = new BehaviorSubject<User>(null);
     tokenExpirationTimer: any;
-    constructor(private http: HttpClient, private router: Router){}
+
+    constructor(private http: HttpClient, private router: Router) { }
+    
     /////////////////////////////////////////////////////////////////////////////////////////
+
     signup(email: string, password: string){
         return this.http.post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + environment.firebaseAPIKey,
         {
@@ -32,7 +35,9 @@ export class AuthService{
             this.handleAuthentication(resData.email, resData.localId, resData.idToken,+resData.expiresIn);
         }));
     }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
+
     login(email: string, password: string){
         return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.firebaseAPIKey,
         {
@@ -43,7 +48,9 @@ export class AuthService{
             this.handleAuthentication(resData.email, resData.localId, resData.idToken,+resData.expiresIn);
         }));
     }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
+
     logout(){
         this.user.next(null);
         this.router.navigate(['/auth']);
@@ -53,14 +60,18 @@ export class AuthService{
         }
         this.tokenExpirationTimer = null;
     }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
+
     autoLogout(expirationDuration){
         console.log(expirationDuration);
         this.tokenExpirationTimer = setTimeout(()=>{
             this.logout();
         },expirationDuration)
     }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
+
     autoLogin(){
         const userData : {
             email: string,
@@ -82,7 +93,9 @@ export class AuthService{
             this.autoLogout(expirationDuration);
         }
     }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
+
     private handleAuthentication(email: string, userId: string, token : string, expiresIn: number){
         const expirationDate = new Date( new Date().getTime() + +expiresIn * 1000)
             const user  = new User(
@@ -94,7 +107,9 @@ export class AuthService{
             this.autoLogout(expiresIn * 1000);
             localStorage.setItem('userData', JSON.stringify(user));
     }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
+
     private handleError(errorRes: HttpErrorResponse){
         let errorMessage = "An unknown error occurred!"
         if(!errorRes.error || !errorRes.error.error){
@@ -110,10 +125,10 @@ export class AuthService{
             case 'INVALID_PASSWORD':
                 errorMessage = 'This password is not correct.';
                 break;
-                // default:
-                //     errorMessage = 'jhhjj'
         };
+        console.log(errorMessage);
         return throwError(errorMessage);
     };
+    
     ///////////////////////////////////////////////////////////////////////////////////////////////
 }
