@@ -10,14 +10,12 @@ import { AuthModule } from './auth/auth.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { ButtonComponent } from './button/button.component';
 import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    ButtonComponent,
     ModalComponent
   ],
   imports: [
