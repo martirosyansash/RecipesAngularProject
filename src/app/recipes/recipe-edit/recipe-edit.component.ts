@@ -1,17 +1,19 @@
-import { Component , Input, OnInit} from '@angular/core';
+import { Component , OnDestroy, OnInit} from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import {ActivatedRoute, Params, Router} from "@angular/router"
 import { RecipeService } from '../recipe.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-recipe-edit',
   templateUrl: './recipe-edit.component.html',
   styleUrls: ['./recipe-edit.component.css']
 })
-export class RecipeEditComponent implements OnInit {
-  id: number;
-  editmode = false;
+export class RecipeEditComponent implements OnInit , OnDestroy {
+  id: number ;
+  editmode: boolean = false;
   recipeForm: FormGroup;
+  // sub: Subscription;
 
   /////////////////////////////////////////////////////////////////////
 
@@ -19,16 +21,25 @@ export class RecipeEditComponent implements OnInit {
     private route: ActivatedRoute,
     private recipeService: RecipeService,
     private router: Router
-  ) { }
+  ) { 
+  }
 
   //////////////////////////////////////////////////////////////////////////////////
 
-  ngOnInit(){
+  ngOnInit() {
+     this.recipeService.editIndex.subscribe(
+      (editIndex: number) => { 
+        this.id = editIndex;
+        console.log(this.id); 
+      }
+    )
     this.route.params
       .subscribe(
         (params: Params)=>{
-          this.id = +params["id"];
-          this.editmode = params["id"] != null; //why?
+          // this.id = params["id"];
+          // console.log(this.id);
+          this.editmode = params["id"] == null;
+          console.log(this.editmode);
           this.initForm();
         }
       )
@@ -105,7 +116,8 @@ export class RecipeEditComponent implements OnInit {
   //////////////////////////////////////////////////////////////////////////////////
 
   onCencel(){
-    this.router.navigate(['../'], { relativeTo: this.route });
+    // this.router.navigate(['../'], { relativeTo: this.route });
+    this.recipeService.newRecipeSelected.next(false);
   }
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -115,4 +127,8 @@ export class RecipeEditComponent implements OnInit {
   }
 
   //////////////////////////////////////////////////////////////////////////////////
+
+  ngOnDestroy(): void {
+    // this.sub.unsubscribe();
+  }
 } 

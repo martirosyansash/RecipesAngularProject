@@ -1,7 +1,7 @@
-import { Component, OnInit,OnDestroy  } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input  } from '@angular/core';
 import { Recipe } from 'src/app/shared/recipe.model';
 import { RecipeService } from '../recipe.service';
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import { ActivatedRoute, Params, Router} from "@angular/router";
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class RecipeDetailComponent implements OnInit, OnDestroy {
   recipe: Recipe;
-  id: number;
+  id: number ;
   paramsSubscription: Subscription;
 
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -34,7 +34,9 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       .subscribe(
         (params: Params)=>{
           this.id = +params["id"];
+          // console.log(this.id);
           this.recipe = this.recipeService.getRecipe(this.id);
+          // this.recipeService.editIndex.next(this.id);
       }
     );
   }
@@ -42,8 +44,10 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   /////////////////////////////////////////////////////////////////////////////////////////
 
   onEditRecipe(){
-    this.router.navigate(["edit"], { relativeTo: this.route });
+    // this.router.navigate(["edit"], { relativeTo: this.route });
     // this.router.navigate(["../", this.id, "edit"], { relativeTo: this.route });
+    this.recipeService.newRecipeSelected.next(true);
+    this.recipeService.editIndex.next(this.id);
   }
   
   /////////////////////////////////////////////////////////////////////////////////////////

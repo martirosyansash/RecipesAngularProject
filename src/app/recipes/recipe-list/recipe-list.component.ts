@@ -1,7 +1,7 @@
-import { Component,OnDestroy,OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
 import { Recipe } from '../../shared/recipe.model';
 import { RecipeService } from '../recipe.service';
-import {Router, ActivatedRoute} from "@angular/router"
+import { Router, ActivatedRoute} from "@angular/router"
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -35,7 +35,8 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   ////////////////////////////////////////////////////////////////////////
 
   onNewRecipe(){
-    this.router.navigate(["new"], {relativeTo: this.route})
+    // this.router.navigate(["new"], {relativeTo: this.route})
+    this.recipeService.newRecipeSelected.next(true);
   }
 
   ////////////////////////////////////////////////////////////////////////
